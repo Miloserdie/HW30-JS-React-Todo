@@ -9,13 +9,9 @@ function Todo(props){
 	const setTodos = props.setTodos;
 
 	function deleteTask(e) {
-		const newTodos = [];
-		
-		todos.forEach((todo) => {
-			if(todo.id !== e.target.closest('li').dataset.id){
-				newTodos.push(todo);
-			}
-		});
+		const newTodos = todos.filter((todo) => {
+			return todo.id !== e.target.closest('li').dataset.id;
+		})
 
 		setTodos(newTodos);
 	} 
@@ -25,14 +21,15 @@ function Todo(props){
 
 		setStatus(status === 'in-progress' ? 'done' : 'in-progress');
 
-		todos.forEach(todo => {
+		for(let todo of todos) {
 			if(todo.id === e.target.closest('li').dataset.id && todo.status === 'in-progress') {  
 				todo.status = 'done';
 			} else if (todo.id === e.target.closest('li').dataset.id && todo.status === 'done') {
 				todo.status = 'in-progress';
 			}
+
 			newTodos.push(todo);
-		})
+		}
 
 		setTodos(newTodos);
 	}
