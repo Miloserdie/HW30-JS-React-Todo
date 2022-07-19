@@ -11,7 +11,7 @@ function Todo(props){
 	function deleteTask(e) {
 		const newTodos = [];
 		
-		todos.map((todo) => {
+		todos.forEach((todo) => {
 			if(todo.id !== e.target.closest('li').dataset.id){
 				newTodos.push(todo);
 			}
@@ -21,7 +21,20 @@ function Todo(props){
 	} 
 
 	function changeStatus(e) {
+		const newTodos = [];
+
 		setStatus(status === 'in-progress' ? 'done' : 'in-progress');
+
+		todos.forEach(todo => {
+			if(todo.id === e.target.closest('li').dataset.id && todo.status === 'in-progress') {  
+				todo.status = 'done';
+			} else if (todo.id === e.target.closest('li').dataset.id && todo.status === 'done') {
+				todo.status = 'in-progress';
+			}
+			newTodos.push(todo);
+		})
+
+		setTodos(newTodos);
 	}
 
 	return (
